@@ -57,3 +57,7 @@ class String
     ((self.length == 0) || self !~ /\S/) ? false : true
   end
 end
+
+class Fixnum
+  def useful?; true end
+end
