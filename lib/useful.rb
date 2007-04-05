@@ -13,3 +13,7 @@ end
 class Fixnum
   def useful?; true end
 end
+
+class Float
+  def useful?; true end
+end
