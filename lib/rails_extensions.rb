@@ -40,5 +40,20 @@ module ApplicationHelper
       file ||= ''
       File.expand_path(File.join(RAILS_ROOT, 'public', file.gsub(/\?.*$/, '')))
     end
+
+    def distance_of_time_for(obj, method)
+      "<span title=\"#{obj.send(method).localtime}\">#{distance_of_time_in_words_to_now(obj.send(method).localtime)}</span>"
+    end
+  
+    def back_link(text='Back', *args)
+      link_to text, (request.referrer || 'javascript:history.go(-1)'), *args
+    end
+
+    def current_controller?(*options)
+      options = options[1] if options.is_a?(Array)
+      return false unless options.useful? || options.is_a?(Hash)
+      options[:action] = :index
+      url_for({:action => :index}) == url_for(options)
+    end
   end
 end
