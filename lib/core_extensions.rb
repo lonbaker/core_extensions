@@ -45,3 +45,9 @@ private
      caller[0] =~ /`([^']*)'/ and $1
    end
 end
+
+class String
+  def to_slug
+    self.gsub("'", '').gsub(/[^\w]+/, '_').gsub(/^_|_$/, '')
+  end
+end
