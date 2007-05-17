@@ -1,3 +1,13 @@
+module ActiveRecord
+  class Base
+    class << self
+      def boolean_field(*args)
+        args.each {|prop| class_eval("def #{prop}?; #{prop} === true || #{prop} === 1 end") }
+      end
+    end
+  end
+end
+
 module ActionController
   class AbstractRequest
     def referrer
