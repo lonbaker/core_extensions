@@ -10,7 +10,7 @@ end
 
 class String
   def useful?
-    ((self.length == 0) || self !~ /\S/) ? false : true
+    ! self.blank?
   end
   
   def useless?
