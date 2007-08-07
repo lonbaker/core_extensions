@@ -60,11 +60,13 @@ module ApplicationHelper
     end
 
     def current_controller?(*options)
-      options = options[1] if options.is_a?(Array)
-      return false unless options.useful? || options.is_a?(Hash)
-      opts = options.dup
-      opts[:action] = :index
-      url_for({:action => :index}) == url_for(opts)
+      begin
+        options = options[1] if options.is_a?(Array)
+        return false unless options.useful? || options.is_a?(Hash)
+        opts = options.dup
+        opts[:action] = :index
+        url_for({:action => :index}) == url_for(opts)
+      rescue Exception; end
     end
   end
 end
