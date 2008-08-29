@@ -20,6 +20,12 @@ module ActionController
       def simple_action(*actions)
         actions.each {|action| class_eval("def #{action}; end")}
       end
+      
+      def forbidden_action(*actions)
+        actions.each {|action| 
+          class_eval("def #{action}; render :nothing => true, :status => :forbidden; end")
+        }
+      end
     end
   end
 end
@@ -52,7 +58,14 @@ module ApplicationHelper
     end
 
     def distance_of_time_for(obj, method)
-      "<span title=\"#{obj.send(method).localtime}\">#{distance_of_time_in_words_to_now(obj.send(method).localtime)}</span>"
+      begin
+        date_time = obj.send(method)
+        date_time = Time.parse(date_time) if date_time.is_a?(String)
+        from_ago = date_time < Time.new ? 'ago' : 'from now'
+        "<span title=\"#{date_time.localtime}\">#{distance_of_time_in_words_to_now(date_time.localtime)} #{from_ago}</span>"
+      rescue
+        "<span style=\"display:none\">object does not respond to #{method}</span>"
+      end
     end
   
     def back_link(text='Back', *args)
