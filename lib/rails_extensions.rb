@@ -9,12 +9,6 @@ module ActiveRecord
 end
 
 module ActionController
-  class AbstractRequest
-    def referrer
-      self.env['HTTP_REFERER']
-    end
-  end
-
   class Base
     class << self
       def simple_action(*actions)
